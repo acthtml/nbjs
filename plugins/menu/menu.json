@@ -1,0 +1,9 @@
+{
+  "name" : "menu",
+  "description" : "test for menu system.",
+  "category" : "core",
+  "core" : "0.x",
+  "version" : "0.0.1",
+  "pluginDependencies" : null,
+  "packageDependencies" : null
+}

@@ -1,0 +1,9 @@
+{
+  "name" : "system",
+  "description" : "core system",
+  "category" : "core",
+  "core" : "0.x",
+  "version" : "0.0.1",
+  "pluginDependencies" : null,
+  "packageDependencies" : null
+}
