@@ -3,7 +3,7 @@
  */
 
 import config from './config';
-import mongoose from './mongoose';
+import mongoose from 'mongoose';
 
 export default {
   // mongoose实体

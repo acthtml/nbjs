@@ -18,10 +18,8 @@ export default {
 
     // 数据库初始化
     db.init();
-
     // 是否已安装
     if(await this.is()) return;
-
     // 进行安装程序
     await this.install();
   },
@@ -32,7 +30,7 @@ export default {
   async is(){
     plugin.initSchema();
 
-    let Plugin = instance.getModel('Plugin');
+    let Plugin = db.getModel('Plugin');
     let rst = await Plugin
                 .find({name : 'system'})
                 .exec()

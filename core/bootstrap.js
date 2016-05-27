@@ -5,8 +5,10 @@
 import install from './install';
 import config from './config';
 import cache from './cache';
+import koa from 'koa';
+import router from 'koa-router'
 
-export async function bootstrap(phase){
+export default async function bootstrap(phase){
   // @todo
   // 1. 错误捕获初始化
   // bootstrapErrorHandle();
@@ -22,5 +24,8 @@ export async function bootstrap(phase){
   // 5. 系统配置初始化
   await config.init();
 
+
+
   // sesssion,path,router
+  return true;
 }

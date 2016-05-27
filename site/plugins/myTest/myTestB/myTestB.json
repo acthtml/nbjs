@@ -1,0 +1,9 @@
+{
+  "name" : "test b",
+  "description" : "test b desc ...",
+  "category" : "test",
+  "core" : "0.x",
+  "version" : "0.0.1",
+  "pluginDependencies" : null,
+  "packageDependencies" : null
+}

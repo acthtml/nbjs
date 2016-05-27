@@ -5,6 +5,7 @@
 import fsp from 'fs-promise';
 import path from 'path';
 import db from './database';
+import cache from './cache';
 
 export default {
   // 系统配置
@@ -26,7 +27,8 @@ export default {
     if(!isExist) return false;
 
     // 导入配置
-    this.configs = require(this.path());
+    let configs = require(this.path());
+    this.configs = configs.default;
     return true;
   },
   /**
@@ -36,21 +38,22 @@ export default {
   async init(){
     this.initSchema();
 
-    let configs = cache.get('configs');
+    let configs = await cache.get('configs');
     if(!configs){
       configs = {};
       // 从配置集合中获取
-      let rst = await Config.find({}).exec();
+      let Config = db.getModel('Config'),
+          rst = await Config.find({}).exec();
       for(let i = 0; i < rst.length; i++){
         let conf = rst[i];
         configs[conf.name] = conf.value;
       }
       // 重新设置缓存
-      cache.set('configs', configs);
+      await cache.set('configs', configs);
     }
 
     // 将初始中的文件配置覆盖数据库配置
-    for(key of this.configs){
+    for(let key in this.configs){
       if(this.configs.hasOwnProperty(key)) configs[key] = this.configs[key];
     }
 
@@ -61,7 +64,7 @@ export default {
    */
   initSchema(){
     let schema = new db.mongoose.Schema({
-      name : string,
+      name : String,
       value : db.mongoose.Schema.Types.Mixed
     });
 
@@ -74,7 +77,7 @@ export default {
    * @return {mix}      返回指定配置的值
    */
   get(name, def){
-    if(!this.configs.hasOwnProperty){
+    if(!this.configs.hasOwnProperty(name)){
       return def;
     }else{
       return this.configs[name];
@@ -97,7 +100,7 @@ export default {
     // 数据库中更新成功则在本地更新
     if(rst){
       this.configs[name] = value;
-      cache.set('configs', this.configs);
+      await cache.set('configs', this.configs);
     }
 
     return rst;
@@ -138,7 +141,7 @@ export default {
         this.configs = {}
       }
 
-      cache.set('configs', this.configs);
+      await cache.set('configs', this.configs);
     }
 
     return rst;
@@ -147,7 +150,7 @@ export default {
    * 配置文件的路径
    */
   path(){
-    let path = 'site/configs.js';
-    return path.join(process.cwd(), path);
+    let dest = 'site/configs.js';
+    return path.join(process.cwd(), dest);
   }
 }

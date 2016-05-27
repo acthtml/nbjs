@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+
+/**
+ * @fileOverview nb命令
+ *
+ * ```shell
+ * nb --help
+ * ```
+ */
+
+
+
+/**
+ * @todo
+ * - 服务后台运行
+ * - 参数使用参考commander包
+ */
+console.log('Command nb triggered.')

@@ -12,6 +12,7 @@ export default {
     driver : "mongodb",
     prefix : ""
   },
-
-  hashSalt : "OvW1nY3EOzqE5k93BlLP3QK1yBvflO-x03oMjF-rTiA"
+  hashSalt : "OvW1nY3EOzqE5k93BlLP3QK1yBvflO-x03oMjF-rTiA",
+  // web服务端口号
+  port : 3000
 }

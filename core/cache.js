@@ -3,7 +3,7 @@
  */
 
 import db from './database';
-import config from './config'
+import config from './config';
 
 export default {
   /**
@@ -69,7 +69,7 @@ export default {
     if(!this.isValidBin(bin)) return false;
 
     let Cache = db.getModel(bin),
-    let rst = await Cache.where({name: id})
+        rst = await Cache.where({name: id})
          .update({$set : {value : data, expire : expire, created : Date.now()}})
          .setOptions({upsert : true})
          .exec()
@@ -143,7 +143,7 @@ export default {
         .then(() => true)
         .catch(e => false);
 
-      if(success) config.set(cacheFlushBin, now);
+      if(success) await config.set(cacheFlushBin, now);
     }
 
     return success;
@@ -152,10 +152,10 @@ export default {
   /**
    * 是否为有效的缓存bin
    * @param {Boolean} bin 缓存bin
-   * @param {Boolean} silence 是否不需要抛出错误
+   * @param {Boolean} silent 是否不需要抛出错误
    * @return {Boolean} 是否有效
    */
-  isValidBin(bin, silence = false;){
+  isValidBin(bin, silent = false){
     let valid = false;
 
     for(let i = 0; i < this.bins.length; i++){
@@ -165,7 +165,7 @@ export default {
       }
     }
 
-    if(!silence && !valid){
+    if(!silent && !valid){
       throw new Error('cache，不是合法的缓存bin：' + bin);
     }
 
@@ -205,7 +205,7 @@ export default {
     let schema = new db.mongoose.Schema({
       name : String,
       value : db.mongoose.Schema.Types.Mixed,
-      expire : {type : Number, default : 0}
+      expire : {type : Number, default : 0},
       created : {type : Number, default : Date.now}
     });
 
@@ -216,7 +216,7 @@ export default {
    */
   initSchema(){
     for(let i = 0; i < this.bins.length; i++){
-      db.addSchema(bin, this.getScheme());
+      db.addSchema(this.bins[i], this.getScheme());
     }
   },
   /**
