@@ -3,18 +3,29 @@
  */
 
 import Koa from 'koa';
-import router from 'koa-router';
+import Router from 'koa-router';
 
 import config from './config';
+import plugin from './plugin';
 
-function application(){
+async function application(){
   let app = new Koa();
 
   // init session
   // init path
+
+
   // init routers
+  let router = new Router();
+  await plugin.invokeAll(router);
+  app.use(router.routers());
+
   // start listen
-  app.listen(config.get(port));
+  app.listen(config.get('port'));
+}
+
+function routers(app){
+
 }
 
 export default application;
