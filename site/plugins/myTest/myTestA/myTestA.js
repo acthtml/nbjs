@@ -17,3 +17,24 @@ export async function router(router){
     await next();
   })
 }
+
+
+function home(){
+  return {
+    'wrapper' : {
+      '$component' : 'wrapper',
+      page : {
+        '$component' : 'page',
+        'header' : {
+          '$component' : 'header'
+        },
+        'content' : {
+          '$component' : 'content'
+        },
+        'footer' : {
+          '$component' : 'footer'
+        }
+      }
+    }
+  }
+}
