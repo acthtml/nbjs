@@ -1,0 +1,9 @@
+/**
+ * @fileOverview <Footer />
+ */
+.footer{
+  color: #000;
+  text-align: center;
+  font-size: 12px;
+  line-height: 24px;
+}

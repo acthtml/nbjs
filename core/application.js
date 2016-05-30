@@ -7,18 +7,22 @@ import Router from 'koa-router';
 
 import config from './config';
 import plugin from './plugin';
+import session from './session';
 
 async function application(){
   let app = new Koa();
 
   // init session
-  // init path
+  app.keys = config.get('secretKeys', [config.get('hashSalt')]);
+  app.use(session());
 
+  // init path
+  // @todo path alias
 
   // init routers
   let router = new Router();
-  await plugin.invokeAll(router);
-  app.use(router.routers());
+  await plugin.invokeAll('router', router);
+  app.use(router.routes());
 
   // start listen
   app.listen(config.get('port'));

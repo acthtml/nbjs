@@ -3,6 +3,7 @@
  */
 
 import install from './install';
+import plugin from './plugin';
 import config from './config';
 import cache from './cache';
 import application from './application';
@@ -17,12 +18,15 @@ export default async function bootstrap(phase){
   // 3. 尝试安装，数据库初始化
   await install.attempt();
 
-  // 4. 缓存初始化
+  // 4. 插件初始化
+  await plugin.init();
+
+  // 5. 缓存初始化
   await cache.init();
 
-  // 5. 系统配置初始化
+  // 6. 系统配置初始化
   await config.init();
 
-  // 6. 初始化应用服务
-  application();
+  // 7. 初始化应用服务
+  await application();
 }

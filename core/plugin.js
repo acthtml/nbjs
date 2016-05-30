@@ -24,23 +24,31 @@ import db from './database';
 
 export default {
   /**
+   * 是否已初始化
+   */
+  inited : false,
+
+  /**
    * 插件的初始化
    */
   async init(){
+    if(this.inited) return;
+
     // 初始化插件相关的schema
-    this.initSchema();
+    this.addSchema();
     // 扫描本地插件
     await this.scanLocalPlugins()
     // 重建插件列表
     await this.rebuildList();
     // 启用核心默认插件
     await this.enableDefaultPlugins();
+    this.inited = true;
   },
 
   /**
    * 初始化插件相关的schema
    */
-  initSchema(){
+  addSchema(){
     if(db.getSchema('Plugin')) return;
 
     let schema = new db.mongoose.Schema({

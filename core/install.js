@@ -20,6 +20,7 @@ export default {
     db.init();
     // 是否已安装
     if(await this.is()) return;
+
     // 进行安装程序
     await this.install();
   },
@@ -28,7 +29,7 @@ export default {
    * @return {Boolean} 如果{plugins}集合中有system条目，则已安装
    */
   async is(){
-    plugin.initSchema();
+    plugin.addSchema();
 
     let Plugin = db.getModel('Plugin');
     let rst = await Plugin
