@@ -4,17 +4,25 @@
 
 import Koa from 'koa';
 import Router from 'koa-router';
+import staticServer from 'koa-static-server';
 
 import config from './config';
 import plugin from './plugin';
 import session from './session';
+import render from './render';
 
 async function application(){
   let app = new Koa();
 
+  // init render
+  app.use(render);
+
+  // init static server
+  app.use(staticServer({rootDir: 'site/files', rootPath: '/files'}));
+
   // init session
-  app.keys = config.get('secretKeys', [config.get('hashSalt')]);
-  app.use(session());
+  // app.keys = config.get('secretKeys', [config.get('hashSalt')]);
+  // app.use(session());
 
   // init path
   // @todo path alias
@@ -26,10 +34,6 @@ async function application(){
 
   // start listen
   app.listen(config.get('port'));
-}
-
-function routers(app){
-
 }
 
 export default application;

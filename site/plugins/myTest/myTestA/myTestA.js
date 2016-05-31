@@ -1,10 +1,23 @@
 /**
  * @fileOverview my test a.
  */
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import path from 'path';
+
+import Html from './component/html';
+import Page from './component/page';
 
 export async function router(router){
   router.get('/home', async (ctx, next) => {
-    ctx.body = 'home page';
+    ctx.type = 'text/html';
+
+    ctx.render = {
+      html : Html,
+      page : Page,
+      app : path.join(__dirname, './component/app.js')
+    }
+
     await next();
   });
 
@@ -16,25 +29,4 @@ export async function router(router){
 
     await next();
   })
-}
-
-
-function home(){
-  return {
-    'wrapper' : {
-      '$component' : 'wrapper',
-      page : {
-        '$component' : 'page',
-        'header' : {
-          '$component' : 'header'
-        },
-        'content' : {
-          '$component' : 'content'
-        },
-        'footer' : {
-          '$component' : 'footer'
-        }
-      }
-    }
-  }
 }

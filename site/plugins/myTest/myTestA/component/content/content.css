@@ -1,0 +1,10 @@
+/**
+ * @fileOverview <Content />
+ */
+.content{
+  margin: 20px auto;
+  background: #f8f8f8;
+  color: #333;
+  font-size: 16px;
+  line-height: 28px;
+}

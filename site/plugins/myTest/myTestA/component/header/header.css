@@ -1,0 +1,10 @@
+/**
+ * @fileOverview <Header />
+ */
+.header{
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  line-height: 40px;
+  background: #fff;
+}
