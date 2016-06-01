@@ -18,6 +18,8 @@ export async function router(router){
       app : path.join(__dirname, './component/app.js')
     }
 
+    // console.log(appfilename);
+
     await next();
   });
 

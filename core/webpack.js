@@ -11,16 +11,16 @@ import path from 'path';
  * @param  {String} destDir     打包后的目标文件夹
  * @return {String}             打包后的文件地址
  */
-export default async function pack(files, destDir = '../site/files/js') {
+export default async function pack(files, destDir = 'site/files/js') {
   if(!files) return;
 
   // webpack 基础配置
   let config = {
     //入口
-    entry: [],
+    entry: files,
     //出口
     output: {
-      path: path.join(__dirname, destDir),
+      path: path.join(process.cwd(), destDir),
       filename: '[hash].js',
     },
     //装载器
@@ -29,13 +29,14 @@ export default async function pack(files, destDir = '../site/files/js') {
     }
   };
 
-  if(typeof files == 'string') files = [files];
-
-  config.entry = files;
   let stats = await wp(config)
+                    .then(stats => {
+                      return stats.toJson();
+                    })
                     .catch(err => {
-                      throw new Error('webpack 打包错误', err)
+                      throw new Error('webpack 打包错误');
                     });
+
   return stats;
 }
 
@@ -48,7 +49,13 @@ export default async function pack(files, destDir = '../site/files/js') {
 function wp(config){
   let p = new Promise((res, rej) => {
     webpack(config, (err, stats) => {
-      if(err) rej(err);
+      if(err)
+        rej(err);
+      let jsonStats = stats.toJson();
+      if(jsonStats.errors.length > 0)
+        rej(jsonStats.errors);
+      if(jsonStats.warnings.length > 0)
+        rej(jsonStats.warnings);
       res(stats);
     })
   })

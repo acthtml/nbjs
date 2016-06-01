@@ -14,11 +14,11 @@ export default class Html extends React.Component {
         <head>
           <meta charSet="UTF-8" />
           <title>Document</title>
-          <script src={this.props.scripts}></script>
         </head>
         <body>
           <div id="wrapper" className="wrapper" dangerouslySetInnerHTML={{__html:this.props.page}}>
           </div>
+          <script src={this.props.scripts}></script>
         </body>
       </html>
     )

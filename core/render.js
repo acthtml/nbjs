@@ -12,18 +12,16 @@ export default async function render(ctx, next){
   if(!ctx.render) return;
 
   // 进行打包
-  let complier =  await webpack(ctx.render.app),
-      scripts = 'files/js/' + complier.compilation.hash + '.js';
-
-
+  let compilation =  await webpack(ctx.render.app),
+      scripts = 'files/js/' + compilation.hash + '.js';
 
   let Page = ctx.render.page,
       Html = ctx.render.html;
 
-  ctx.body = '<!DOCTYPE html>' + _render(Html, {page : _render(Page), scripts : scripts});
+  ctx.body = '<!DOCTYPE html>' + _render(Html, {page : _render(Page), scripts : scripts}, true);
 }
 
 function _render(Component, props = {}, isStaticMarkup = false){
-  return ReactDomServer[isStaticMarkup ? 'renderToString' : 'renderToStaticMarkup'](<Component {...props}/>);
+  return ReactDomServer[isStaticMarkup ? 'renderToStaticMarkup' : 'renderToString'](<Component {...props}/>);
 }
 

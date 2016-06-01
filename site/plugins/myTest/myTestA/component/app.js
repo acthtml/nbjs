@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
-import Page from './page/page';
+import ReactDOM from 'react-dom';
+import Page from './page';
 
 ReactDOM.render(<Page />, document.getElementById('wrapper'));
