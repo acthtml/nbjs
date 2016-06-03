@@ -21,8 +21,8 @@ async function application(){
   app.use(staticServer({rootDir: 'site/files', rootPath: '/files'}));
 
   // init session
-  // app.keys = config.get('secretKeys', [config.get('hashSalt')]);
-  // app.use(session());
+  app.keys = config.get('secretKeys', [config.get('hashSalt')]);
+  app.use(session());
 
   // init path
   // @todo path alias
