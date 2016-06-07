@@ -37,7 +37,9 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "antd": "^1.3.2"
+  },
   "bin": {
     "nb": "./bin/run"
   }
